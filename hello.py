@@ -4,7 +4,6 @@ import time
 app = Flask(__name__)
 @app.route('/')
 def hello_world():
-    time.sleep(0.5)
     return 'Hello World! Startdeployment V1'
 @app.route('/health')
 def health_check():
