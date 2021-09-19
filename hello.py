@@ -14,6 +14,7 @@ from opentelemetry.sdk.extension.aws.trace import AwsXRayIdGenerator
 from opentelemetry import propagate
 from opentelemetry.sdk.extension.aws.trace.propagation.aws_xray_format import AwsXRayFormat
 
+from opentelemetry.instrumentation.botocore import BotocoreInstrumentor
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
 
