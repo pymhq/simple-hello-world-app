@@ -4,6 +4,7 @@ Jinja2==2.7.2
 MarkupSafe==0.23
 Werkzeug==0.9.4
 itsdangerous==0.24
+requests==2.24.0
 opentelemetry-semantic-conventions==0.24b0
 opentelemetry-proto~=1.5
 opentelemetry-api~=1.5
