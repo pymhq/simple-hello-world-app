@@ -7,7 +7,7 @@ import json
 from opentelemetry import trace
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
 from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchExportSpanProcessor # ?
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
 
 from opentelemetry.sdk.extension.aws.trace import AwsXRayIdGenerator
 
@@ -19,7 +19,7 @@ from opentelemetry.instrumentation.flask import FlaskInstrumentor
 
 
 otlp_exporter = OTLPSpanExporter(endpoint="http://localhost:4317")
-span_processor = BatchExportSpanProcessor(otlp_exporter)
+span_processor = BatchSpanProcessor(otlp_exporter)
 trace.set_tracer_provider(TracerProvider(active_span_processor=span_processor, ids_generator=AwsXRayIdGenerator()))
 
 propagate.set_global_textmap(AwsXRayFormat())
