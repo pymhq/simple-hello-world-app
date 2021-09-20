@@ -33,6 +33,17 @@ RequestsInstrumentor().instrument()
 # Initialize `Instrumentor` for the `flask` web framework
 FlaskInstrumentor().instrument_app(app)
 
+def convert_otel_trace_id_to_xray(otel_trace_id_decimal):
+    otel_trace_id_hex = "{:032x}".format(otel_trace_id_decimal)
+    x_ray_trace_id = TRACE_ID_DELIMITER.join(
+        [
+            TRACE_ID_VERSION,
+            otel_trace_id_hex[:TRACE_ID_FIRST_PART_LENGTH],
+            otel_trace_id_hex[TRACE_ID_FIRST_PART_LENGTH:],
+        ]
+    )
+    return '{{"traceId": "{}"}}'.format(x_ray_trace_id)
+
 @app.route('/')
 def hello_world():
     time.sleep(0.5)
@@ -40,6 +51,17 @@ def hello_world():
 @app.route('/health')
 def health_check():
     return 'health check'
+
+# Test HTTP instrumentation
+@app.route("/outgoing-http-call")
+def call_http():
+    requests.get("https://aws.amazon.com/")
+
+    return app.make_response(
+        convert_otel_trace_id_to_xray(
+            trace.get_current_span().get_span_context().trace_id
+        )
+    )
 
 
 
