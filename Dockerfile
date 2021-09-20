@@ -12,4 +12,4 @@ ENV HOME=/
 
 ENV OTEL_RESOURCE_ATTRIBUTES='service.name=aws-sample-manual-app'
 
-CMD python3 application.py
+CMD python3 hello.py
