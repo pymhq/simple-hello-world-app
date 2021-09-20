@@ -30,7 +30,7 @@ RequestsInstrumentor().instrument()
 # Initialize `Instrumentor` for the `flask` web framework
 FlaskInstrumentor().instrument_app(app)
 
-@app.route('/app')
+@app.route('/')
 def blog():
     return "Hello, from App!"
 
