@@ -1,5 +1,4 @@
 import boto3
-from flask import render_template
 from flask import Flask
 
 from opentelemetry import trace
@@ -30,10 +29,6 @@ BotocoreInstrumentor().instrument()
 RequestsInstrumentor().instrument()
 # Initialize `Instrumentor` for the `flask` web framework
 FlaskInstrumentor().instrument_app(app)
-
-@app.route('/')
-def home():
-    return render_template('index.html')
 
 @app.route('/app')
 def blog():
