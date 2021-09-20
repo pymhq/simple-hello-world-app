@@ -36,7 +36,7 @@ FlaskInstrumentor().instrument_app(app)
 @app.route('/')
 def hello_world():
     time.sleep(0.5)
-    return 'Hello World! Startdeployment V1'
+    return 'Hello World! App Runner'
 @app.route('/health')
 def health_check():
     return 'health check'
