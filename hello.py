@@ -3,6 +3,7 @@ from flask import Flask
 import os
 import time
 import json 
+import requests
 
 from opentelemetry import trace
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
@@ -17,6 +18,12 @@ from opentelemetry.sdk.extension.aws.trace.propagation.aws_xray_format import Aw
 from opentelemetry.instrumentation.botocore import BotocoreInstrumentor
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
+
+from opentelemetry.sdk.extension.aws.trace.propagation.aws_xray_format import (
+    TRACE_ID_DELIMITER,
+    TRACE_ID_FIRST_PART_LENGTH,
+    TRACE_ID_VERSION,
+)
 
 
 otlp_exporter = OTLPSpanExporter(endpoint="http://localhost:4317")
@@ -46,7 +53,6 @@ def convert_otel_trace_id_to_xray(otel_trace_id_decimal):
 
 @app.route('/')
 def hello_world():
-    time.sleep(0.5)
     return 'Hello World! App Runner'
 @app.route('/health')
 def health_check():
@@ -64,7 +70,8 @@ def call_http():
     )
 
 
-
 if __name__ == '__main__':
     app.run(threaded=True, host="0.0.0.0", debug=True, port=int(os.environ.get("PORT", 8000)))
+    
+
     
